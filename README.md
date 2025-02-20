@@ -1,4 +1,4 @@
-# Orca
+# Olingo
 A lightweight Docker UI managing tool.
 
 
