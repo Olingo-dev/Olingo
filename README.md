@@ -1,5 +1,6 @@
+![Olingo banner](https://github.com/Olingo-dev/Olingo/blob/main/.media/olingo_github_banner.png?raw=true)
 # Olingo
-A lightweight Docker UI managing tool.
+A lightweight Docker UI build for the web.
 
 
 
