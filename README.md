@@ -1,4 +1,11 @@
+<div>
+
 ![Olingo banner](https://github.com/Olingo-dev/Olingo/blob/main/.media/olingo_github_banner.png?raw=true)
+</div>
+<div align="center">
+
+![GitHub top language](https://img.shields.io/github/languages/top/Olingo-dev/Olingo)
+</div>
 # Olingo
 A lightweight Docker UI build for the web.
 
@@ -6,7 +13,7 @@ A lightweight Docker UI build for the web.
 
 
 # Configuration
-Orca is fully configurable using environment variables.
+Olingo is fully configurable using environment variables.
 
 | Environment variable | Description                                                                                                                                                                                                                                                                                                |
 |----------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
