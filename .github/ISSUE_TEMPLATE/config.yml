@@ -1,0 +1,7 @@
+blank_issues_enabled: false
+issue_templates:
+  - name: "Issue Report"
+    about: "Use this template to report an issue in the application."
+    title: "Issue Report"
+    labels:
+      - "bug"
