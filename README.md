@@ -1,6 +1,6 @@
 <div>
 
-![Olingo banner](https://github.com/Olingo-dev/Olingo/blob/main/.media/identity/olingo_github_banner.png?raw=true)
+![Olingo banner](https://github.com/Olingo-dev/Olingo/blob/canary/.media/identity/olingo_github_banner.png?raw=true)
 </div>
 <div align="center">
 
@@ -29,13 +29,13 @@ Olingo is fully configurable using environment variables.
 ## Contributing
 Olingo has provided a C4 Model (Levels 1–3) to help contributors gain a clear understanding of the current project setup:
 
-- Level 1: [Context Diagram]()
+- Level 1: [Context Diagram](https://github.com/Olingo-dev/Olingo/blob/canary/.media/diagrams/Olingo-context-diagram-lvl1.png)
   Offers a high-level overview of the system, including its users and interactions with external systems.
 
-- Level 2: [Container Diagram]()
+- Level 2: [Container Diagram](https://github.com/Olingo-dev/Olingo/blob/canary/.media/diagrams/Olingo-container-diagram-lvl2.png)
   Breaks down the system into various containers (applications or services) and illustrates how they communicate.
 
-- Level 3: [Component Diagram]()
+- Level 3: [Component Diagram](https://github.com/Olingo-dev/Olingo/blob/canary/.media/diagrams/Olingo-component-diagram-lvl3.png)
   Delves into the internal structure of individual containers, highlighting key components and their responsibilities.
 
 These diagrams are designed to help you quickly understand the system's architecture and how different parts interact.
