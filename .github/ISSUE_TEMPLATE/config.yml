@@ -1,0 +1,15 @@
+blank_issues_enabled: true
+issue_templates:
+contact_links:
+  - name: General Question (Discord)
+    url: https://discord.gg/fNGTKSHjQM
+    about: Ask questions and discuss topics related to the project.
+  - name: Bug Report
+    description: Report a reproducible bug or error.
+    labels: bug
+    file: bug_report.md
+
+  - name: Feature Request
+    description: Suggest an idea or feature improvement.
+    labels: enhancement
+    file: feature_request.md
