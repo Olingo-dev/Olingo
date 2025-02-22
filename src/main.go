@@ -10,10 +10,10 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/filesystem"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/requestid"
-	"github.com/nidrux/orca/internal/config"
-	"github.com/nidrux/orca/internal/database"
-	"github.com/nidrux/orca/internal/routes"
-	"github.com/nidrux/orca/pkg/registry"
+	"github.com/nidrux/olingo/internal/config"
+	"github.com/nidrux/olingo/internal/database"
+	"github.com/nidrux/olingo/internal/routes"
+	"github.com/nidrux/olingo/pkg/registry"
 )
 
 //go:embed web/dist/*
