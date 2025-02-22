@@ -2,9 +2,9 @@ package config
 
 import (
 	"github.com/gofiber/fiber/v2/log"
-	"github.com/nidrux/orca/pkg/pipeline"
-	"github.com/nidrux/orca/pkg/registry"
-	"github.com/nidrux/orca/pkg/util"
+	"github.com/nidrux/olingo/pkg/pipeline"
+	"github.com/nidrux/olingo/pkg/registry"
+	"github.com/nidrux/olingo/pkg/util"
 )
 
 type config struct {

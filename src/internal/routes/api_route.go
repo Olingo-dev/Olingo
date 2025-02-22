@@ -2,8 +2,8 @@ package routes
 
 import (
 	"github.com/gofiber/fiber/v2"
-	"github.com/nidrux/orca/internal/config"
-	"github.com/nidrux/orca/pkg/registry"
+	"github.com/nidrux/olingo/internal/config"
+	"github.com/nidrux/olingo/pkg/registry"
 )
 
 const BASE_PATH string = "/api"
