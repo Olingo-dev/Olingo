@@ -44,16 +44,15 @@ func main() {
 	env := os.Getenv("DEVCONTAINER")
 	if env == "true" {
 		log.Info("Running in development mode: Serving from local filesystem")
-		app.Static("/", "../web/build") // Serve from local folder
+		app.Static("*", "../web/build") // Serve from local folder
 	} else {
 		log.Info("Running in production mode: Serving embedded files")
-		app.Use("/", filesystem.New(filesystem.Config{
+		app.Use("*", filesystem.New(filesystem.Config{
 			Root:       http.FS(embeddedFiles),
 			PathPrefix: "web/build",
 			Browse:     false,
 		}))
 	}
-	app.Static("*", "../../web/build/index.html")
 
 	log.Fatal(app.Listen(fmt.Sprintf(":%d", 8080)))
 }

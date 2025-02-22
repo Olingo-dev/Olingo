@@ -1,0 +1,57 @@
+// Import custom font
+@font-face {
+    font-family: 'Olingo';
+    src: url('@/assets/fonts/couture-bold.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+.olingo-font {
+    font-family: "Olingo", sans-serif
+}
+
+// Colors
+$darker: #1b1b1b;
+.bg-darker { background-color: $darker}
+$darkest: #181818;
+.bg-darkest { background-color: $darkest}
+
+
+//Dynamic height.
+.grow-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+.grow {
+  flex-grow: 1;
+  overflow: auto;
+}
+
+.transition-all {
+  transition: all 0.3s ease;
+}
+
+/* Adjusting the sidebar collapsed state */
+.sidebar.collapsed {
+  width: 80px !important;
+}
+
+.sidebar .nav-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+}
+
+.sidebar .nav-item .nav-link {
+  display: flex;
+  align-items: center;
+}
+
+.sidebar.collapsed .nav-item .nav-link {
+  justify-content: center;
+}
+
+
+// Import Bootstrap
+@import "bootstrap/scss/bootstrap";

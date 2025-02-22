@@ -13,7 +13,7 @@ var once sync.Once
 
 func InitDatabase() {
 	once.Do(func() {
-		URI := ""
+		URI := "postgres://username:password@localhost:5432/Olingo"
 		pool, err := pgxpool.New(context.Background(), URI)
 		if err != nil {
 			log.Fatal("Failed to connect to the database. Error: %v", err)
