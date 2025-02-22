@@ -13,7 +13,6 @@ Start by forking the repository. This allows you to make changes without affecti
 Create a new branch for your feature or fix. We recommend naming branches clearly, such as:
 - `feature/awesome-new-feature`
 - `bugfix/{issue number}-fix-crash-on-startup`
-- `docs/update-readme`
 
 ### 3. Make Your Changes
 
@@ -33,7 +32,7 @@ Ensure that any new functionality or changes are reflected in the documentation.
 
 ### 6. Submit a Pull Request
 
-Once your changes are ready, submit a pull request (PR) to the `main` branch of the repository. In your PR description:
+Once your changes are ready, submit a pull request (PR) to the `canary` branch of the repository. In your PR description:
 - Clearly explain what you’ve done and why
 - Link to any relevant issue numbers (e.g., `Fixes #123`)
 - Provide any additional context that may be helpful for reviewers

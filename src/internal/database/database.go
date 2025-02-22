@@ -6,7 +6,7 @@ import (
 	"sync"
 
 	"github.com/jackc/pgx/v5/pgxpool"
-	"github.com/nidrux/orca/pkg/registry"
+	"github.com/nidrux/olingo/pkg/registry"
 )
 
 var once sync.Once
