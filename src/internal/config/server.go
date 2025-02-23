@@ -4,7 +4,7 @@ import (
 	"sync"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/nidrux/orca/pkg/registry"
+	"github.com/nidrux/olingo/pkg/registry"
 )
 
 var (

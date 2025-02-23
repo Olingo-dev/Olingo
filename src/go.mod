@@ -1,4 +1,4 @@
-module github.com/nidrux/orca
+module github.com/nidrux/olingo
 
 go 1.23.4
 
