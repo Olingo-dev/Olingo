@@ -54,3 +54,6 @@ dist-ssr
 *.sw?
 src/web/build
 src/web/.statistics
+.vscode
+
+.pnpm-store
