@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/log"
 	"github.com/gofiber/fiber/v2/middleware/filesystem"
 	"github.com/gofiber/fiber/v2/middleware/logger"
@@ -44,14 +45,25 @@ func main() {
 	env := os.Getenv("DEVCONTAINER")
 	if env == "true" {
 		log.Info("Running in development mode: Serving from local filesystem")
-		app.Static("*", "../web/build") // Serve from local folder
+		app.Static("/", "../web/build") // Serve from local folder
+
+		app.Get("/*", func(c *fiber.Ctx) error {
+			return c.SendFile("web/build/index.html")
+		})
 	} else {
 		log.Info("Running in production mode: Serving embedded files")
-		app.Use("*", filesystem.New(filesystem.Config{
+		app.Use("/", filesystem.New(filesystem.Config{
 			Root:       http.FS(embeddedFiles),
 			PathPrefix: "web/build",
 			Browse:     false,
 		}))
+		app.Get("/*", func(c *fiber.Ctx) error {
+			file, err := embeddedFiles.ReadFile("web/build/index.html")
+			if err != nil {
+				return fiber.ErrNotFound
+			}
+			return c.Type("html").Send(file)
+		})
 	}
 
 	log.Fatal(app.Listen(fmt.Sprintf(":%d", 8080)))
