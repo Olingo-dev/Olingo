@@ -48,7 +48,7 @@ func main() {
 		app.Static("/", "../web/build") // Serve from local folder
 
 		app.Get("/*", func(c *fiber.Ctx) error {
-			return c.SendFile("web/build/index.html")
+			return c.SendFile("../web/build/index.html")
 		})
 	} else {
 		log.Info("Running in production mode: Serving embedded files")
