@@ -40,9 +40,13 @@ Olingo has provided a C4 Model (Levels 1–3) to help contributors gain a clear 
 
 These diagrams are designed to help you quickly understand the system's architecture and how different parts interact.
 
+
+
 ### Contribution Guidelines
 Before contributing, please make sure to review and follow the project's [contribution guidelines](./CONTRIBUTING.md). These guidelines cover important aspects such as coding standards, documentation requirements, and the pull request process to ensure consistency and quality across all contributions.
 
+### Development on windows.
+If you're experiencing performance issues with your DevContainer, try cloning the Olingo repository directly into the Windows Subsystem for Linux (WSL) and work from there. This can enhance performance because WSL offers faster file system operations compared to traditional Windows setups.
 
 
 ## Roadmap
