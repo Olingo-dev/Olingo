@@ -1,4 +1,4 @@
-import { Home, Settings, Database, Container, Network, File, HardDrive, Book, Users, Group} from "lucide-react"
+import { Home, Settings, Database, Container, Network, File, HardDrive, Book, Users, Group, Package} from "lucide-react"
 import { NavigationItem } from "./types/NavigationItem"
 const navigationItems: NavigationItem[] = [
     {
@@ -9,28 +9,35 @@ const navigationItems: NavigationItem[] = [
         
     },
     {
+        title: "Groups",
+        url: "/groups",
+        icon: Package,
+        group: "General",
+        
+    },
+    {
         title: "Containers",
         url: "/containers",
-        group: "General",
+        group: "Docker",
         icon: Container
         
     },
     {
         title: "Networks",
         url: "/networks",
-        group: "General",
+        group: "Docker",
         icon: Network
     },
     {
         title: "Volumes",
         url: "/#",
-        group: "General",
+        group: "Docker",
         icon: Database
     },
     {
         title: "Images",
         url: "/#",
-        group: "General",
+        group: "Docker",
         icon: File
     },
     {
