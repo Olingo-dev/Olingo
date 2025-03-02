@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/sidebar"
 
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
-import { NavigationItem } from "@/types/NavigationItem";
+import { NavigationItem } from "../../../types/NavigationItem";
 import navigationItems from "@/sidebar.config";
 import { ChevronRight } from "lucide-react";
 

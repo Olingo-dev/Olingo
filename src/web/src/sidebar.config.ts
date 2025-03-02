@@ -1,5 +1,5 @@
 import { Home, Settings, Database, Container, Network, File, HardDrive, Book, Users, Group, Package} from "lucide-react"
-import { NavigationItem } from "./types/NavigationItem"
+import { NavigationItem } from "../types/NavigationItem"
 const navigationItems: NavigationItem[] = [
     {
         title: "Home",

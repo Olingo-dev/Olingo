@@ -7,7 +7,6 @@
 		"dockerfile": "Dockerfile",
 		"context": "."
 	},
-	"postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}",
 	"containerEnv": {
 		"DEVCONTAINER": "true"
 	}

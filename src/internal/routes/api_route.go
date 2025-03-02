@@ -10,6 +10,7 @@ const BASE_PATH string = "/api"
 
 func ApiRoutes() {
 	api := config.GetWebServer().Group(BASE_PATH)
+	// CONFIG
 	api.Get("/version", func(context *fiber.Ctx) error {
 		return context.JSON(fiber.Map{"version": registry.GetRegistry().Get("version").(string)})
 	})
@@ -20,6 +21,10 @@ func ApiRoutes() {
 		return context.Status(200).JSON(fiber.Map{"message": "Hello world"})
 	})
 	api.Post("/networks", func(context *fiber.Ctx) error {
+		return context.Status(200).JSON(fiber.Map{"message": "Hello world"})
+	})
+	// GROUPS
+	api.Get("/groups", func(context *fiber.Ctx) error {
 		return context.Status(200).JSON(fiber.Map{"message": "Hello world"})
 	})
 }

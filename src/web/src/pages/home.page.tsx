@@ -1,98 +1,84 @@
-import { Badge } from "@/components/ui/badge";
-import { Card, CardDescription,  CardHeader, CardTitle } from "@/components/ui/card";
+// import { Card, CardDescription,  CardHeader, CardTitle } from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Card, CardContent,CardHeader, CardTitle } from "@/components/ui/card";
+import { MainCard } from "@/components/ui/main-card";
 import { Separator } from "@/components/ui/separator";
-import { Container, HardDrive, Users } from "lucide-react";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Container, Eye, HardDrive, Settings, Users } from "lucide-react";
 
 export function HomePage() {
-    const ICONS_SIZE = 150;
     return (
         <article className="p-10">
             <div className="grid grid-cols-3 gap-4 mb-4">
-                <div className="relative">
-                    <Card className="relative overflow-hidden cursor-pointer hover:shadow-hover">
-                        <CardHeader>
-                            <CardTitle>Containers</CardTitle>
-                            <CardDescription>View and manage all your containers</CardDescription>
-                        </CardHeader>
-                        <Container size={ICONS_SIZE} className="absolute top-1/2 -translate-y-1/2 right-5 opacity-10"/>
-                    </Card>
-                    <Badge className="absolute top-0 right-5 -translate-y-1/2 z-99 bg-healthy">Healthy</Badge>
-                </div>
-                <div className="relative">
-                    <Card className="relative overflow-hidden cursor-pointer hover:shadow-hover">
-                        <CardHeader>
-                            <CardTitle>Nodes</CardTitle>
-                            <CardDescription>Manage your active nodes</CardDescription>
-                        </CardHeader>
-                        <HardDrive size={ICONS_SIZE} className="absolute top-1/2 -translate-y-1/2 right-5 opacity-10"/>
-                    </Card>
-                    <Badge className="absolute top-[-50%] z-99 top-0 right-5 -translate-y-1/2 bg-healthy">Healthy</Badge>
-                </div>
-                <Card className="relative overflow-hidden cursor-pointer hover:shadow-hover">
-                    <CardHeader>
-                        <CardTitle>Users</CardTitle>
-                        <CardDescription>Manage users and their access</CardDescription>
-                    </CardHeader>
-                    <Users size={ICONS_SIZE} className="absolute top-1/2 -translate-y-1/2 right-5 opacity-10"/>
-                </Card>
+                <MainCard content={{title: "Containers", description: "View and manage all your containers"}} badge={{text: "Healthy", color: "bg-healthy"}} _Icon={Container}/>
+                <MainCard content={{title: "Nodes", description: "Manage your active nodes"}} badge={{text: "Healthy", color: "bg-healthy"}} _Icon={HardDrive}/>
+                <MainCard content={{title: "Users", description: "Manage users and their access"}} _Icon={Users}/>
             </div>
             <Separator className="mb-4"/>
-            <div className="grid grid-cols-3 gap-2">
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Group name</CardTitle>
-                        <CardDescription>Some description</CardDescription>
-                    </CardHeader>
-                </Card>
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Group name</CardTitle>
-                        <CardDescription>Some description</CardDescription>
-                    </CardHeader>
-                </Card>
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Group name</CardTitle>
-                        <CardDescription>Some description</CardDescription>
-                    </CardHeader>
-                </Card>
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Group name</CardTitle>
-                        <CardDescription>Some description</CardDescription>
-                    </CardHeader>
-                </Card>
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Group name</CardTitle>
-                        <CardDescription>Some description</CardDescription>
-                    </CardHeader>
-                </Card>
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Group name</CardTitle>
-                        <CardDescription>Some description</CardDescription>
-                    </CardHeader>
-                </Card>
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Group name</CardTitle>
-                        <CardDescription>Some description</CardDescription>
-                    </CardHeader>
-                </Card>
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Group name</CardTitle>
-                        <CardDescription>Some description</CardDescription>
-                    </CardHeader>
-                </Card>
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Group name</CardTitle>
-                        <CardDescription>Some description</CardDescription>
-                    </CardHeader>
-                </Card>
-                
+            <div className="grid grid-cols-[70%_30%] gap-4">
+                <div>
+                <Card className="h-full">
+                        <CardHeader>
+                            <CardTitle className="flex justify-between">
+                                Groups
+                                <a href="/groups" className="text-sm flex items-center"> <Settings size={14} className="mr-1"/>Manage groups</a>
+                            </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <Table>
+                                <TableHeader>
+                                    <TableRow className="bg-navbackground">
+                                        <TableHead>Name</TableHead>
+                                        <TableHead>Containers</TableHead>
+                                        <TableHead>Id</TableHead>
+                                    </TableRow>
+                                </TableHeader>
+                                <TableBody className="bg-sidebar">
+                                    <TableRow className="cursor-pointer">
+                                        <TableCell>My databases</TableCell>
+                                        <TableCell>5</TableCell>
+                                        <TableCell>9fef05c2-4ca7-4c99-a6c7-e2345a4ef373</TableCell>
+                                    </TableRow>
+                                    <TableRow className="cursor-pointer">
+                                        <TableCell>Olingo services</TableCell>
+                                        <TableCell>2</TableCell>
+                                        <TableCell>9fef05c2-4ca7-4c99-a6c7-e2345a4ef373</TableCell>
+                                    </TableRow>
+                                </TableBody>
+                            </Table>
+                        </CardContent>
+                    </Card>
+                </div>
+                <div>
+                    <Card className="h-full">
+                        <CardHeader>
+                            <CardTitle className="flex justify-between">
+                                Recent activity
+                                <a href="/users/activity" className="text-sm flex items-center"> <Eye  size={14} className="mr-1"/>View more</a>
+                            </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                        <ul>
+                            <li className="flex items-center text-sm">
+                                <Avatar className="h-4 w-4 mr-2">
+                                    <AvatarImage src="https://avatars.githubusercontent.com/u/37250273?v=4"/>
+                                    <AvatarFallback>53</AvatarFallback>
+                                </Avatar>
+                                Deleted network "oligo_network"
+                                <span className="ml-2 opacity-25"> March 2 2025, 11:59:05</span>
+                            </li>
+                            <li className="flex items-center text-sm">
+                                <Avatar className="h-4 w-4 mr-2">
+                                    <AvatarImage src="https://avatars.githubusercontent.com/u/37250273?v=4"/>
+                                    <AvatarFallback>53</AvatarFallback>
+                                </Avatar>
+                                Created network "oligo_network"
+                                <span className="ml-2 opacity-25"> March 2 2025, 11:58:05</span>
+                            </li>
+                        </ul>
+                        </CardContent>
+                    </Card>
+                </div>
             </div>
         </article>
     )
