@@ -57,3 +57,8 @@ src/web/.statistics
 .vscode
 
 .pnpm-store
+
+Olingo.http
+
+
+*.sqlite
