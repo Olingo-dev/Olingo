@@ -3,6 +3,7 @@ package internal
 import (
 	"sync"
 
+	"github.com/nidrux/olingo/internal/models"
 	"github.com/nidrux/olingo/pkg/registry"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -16,6 +17,7 @@ func InitDatabase() {
 		if err != nil {
 			panic("failed to connect database")
 		}
+		db.AutoMigrate(&models.Group{})
 		registry.GetRegistry().Register("database", db)
 	})
 }

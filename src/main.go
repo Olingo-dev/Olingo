@@ -44,10 +44,10 @@ func main() {
 	env := os.Getenv("DEVCONTAINER")
 	if env == "true" {
 		log.Info("Running in development mode: Serving from local filesystem")
-		app.Static("/", "../web/build") // Serve from local folder
+		app.Static("/", "./web/build") // Serve from local folder
 
-		app.Get("/*", func(c *fiber.Ctx) error {
-			return c.SendFile("web/build/index.html")
+		app.Get("*", func(c *fiber.Ctx) error {
+			return c.SendFile("./web/build/index.html")
 		})
 	} else {
 		log.Info("Running in production mode: Serving embedded files")
