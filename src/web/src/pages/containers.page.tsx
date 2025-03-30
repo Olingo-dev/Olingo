@@ -27,7 +27,7 @@ export function ContainersPage() {
                     <MenubarTrigger>Export</MenubarTrigger>
                     <MenubarContent>
                     <MenubarItem>
-                        To csv
+                        To CSV
                     </MenubarItem>
                     </MenubarContent>
                 </MenubarMenu>

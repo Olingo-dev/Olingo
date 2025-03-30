@@ -53,7 +53,7 @@ export function HomePage() {
                                         groups.map((group) => (
                                             <TableRow className="cursor-pointer" key={group.ID}>
                                             <TableCell>{group.Name}</TableCell>
-                                            <TableCell>5</TableCell> {/* Placeholder - replace if needed */}
+                                            <TableCell>5</TableCell>
                                             <TableCell>{new Date(group.CreatedAt).toLocaleDateString()}</TableCell>
                                             <TableCell>
                                                 <div className="flex itmes-center">
@@ -63,8 +63,8 @@ export function HomePage() {
                                                     </Avatar>
                                                     <p>536b</p>
                                                 </div>
-                                            </TableCell> {/* Placeholder - replace if needed */}
-                                            <TableCell><Badge className="bg-healthy">All containers running</Badge></TableCell> {/* Placeholder - replace if needed */}
+                                            </TableCell>
+                                            <TableCell><Badge className="bg-healthy">All containers running</Badge></TableCell>
                                             <TableCell>
                                                 <TooltipProvider>
                                                     <Tooltip>

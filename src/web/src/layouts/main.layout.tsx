@@ -31,7 +31,7 @@ export function MainLayout() {
                         </div>
                         <footer className="bg-sidebar flex justify-end">
                             <a><img src={github}/></a>
-                            <p className=" flex items-center p-4"><GitCommitHorizontal className="mr-2" size={16}/> Version: {version}</p>
+                            <p className=" flex items-center p-4"><GitCommitHorizontal className="mr-2" size={16}/>{version}</p>
                         </footer>
                     </article>
                 </SidebarProvider>
