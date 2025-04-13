@@ -60,5 +60,7 @@ src/web/.statistics
 
 Olingo.http
 
+# Air temporary build
+tmp/
 
 *.sqlite
