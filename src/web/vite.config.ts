@@ -24,5 +24,10 @@ export default defineConfig({
 			treeshake: true,
 		},
 	},
+	server: {
+		proxy: {
+			"/api": "http://127.0.0.1:8080"
+		}
+	}
 });
 
