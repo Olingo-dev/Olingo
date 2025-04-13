@@ -41,6 +41,9 @@ export default {
     				DEFAULT: 'hsl(var(--destructive))',
     				foreground: 'hsl(var(--destructive-foreground))'
     			},
+				healthy: {
+					DEFAULT: 'hsl(var(--badge-green))'
+				},
     			border: 'hsl(var(--border))',
     			input: 'hsl(var(--input))',
     			ring: 'hsl(var(--ring))',
@@ -64,6 +67,9 @@ export default {
     		},
 			fontFamily: {
 				olingo: ["Olingo", "sans-serif"]
+			},
+			boxShadow: {
+				"hover": "var(--shadow-hover)"
 			}
     	}
     },

@@ -9,6 +9,7 @@ import (
 
 type config struct {
 	Port uint16 `env:"PORT"`
+	// ExecutingPath string
 }
 
 func loadConfig(getter util.ValueGetter) (*config, error) {
@@ -16,12 +17,20 @@ func loadConfig(getter util.ValueGetter) (*config, error) {
 	if err != nil {
 		log.Fatalf("Failed to validate")
 	}
-	port, err := pipeline.Process[int](portStr, util.NotEmpty, util.ToInt)
+	port, err := pipeline.ProcessWithTransform(portStr, util.ToInt[int], util.NotEmpty)
 	if err != nil {
 		return nil, err
 	}
+
+	// executingPath, err := os.Executable()
+	// if err != nil {
+	// 	return nil, err
+	// }
+	// executingPath = filepath.Dir(executingPath)
+
 	return &config{
 		Port: uint16(port),
+		// ExecutingPath: executingPath,
 	}, nil
 }
 

@@ -57,3 +57,10 @@ src/web/.statistics
 .vscode
 
 .pnpm-store
+
+Olingo.http
+
+# Air temporary build
+tmp/
+
+*.sqlite

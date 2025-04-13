@@ -11,9 +11,8 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/filesystem"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/requestid"
+	"github.com/nidrux/olingo/internal"
 	"github.com/nidrux/olingo/internal/config"
-	"github.com/nidrux/olingo/internal/database"
-	"github.com/nidrux/olingo/internal/routes"
 	"github.com/nidrux/olingo/pkg/registry"
 )
 
@@ -32,7 +31,7 @@ func main() {
 	app := config.GetWebServer()
 	// cfg := config.GetConfig()
 
-	database.InitDatabase()
+	internal.InitDatabase()
 
 	app.Use(logger.New())
 	app.Use(requestid.New())
@@ -41,14 +40,14 @@ func main() {
 	}))
 
 	// First init the api routes. every other route will fallback to the react dist
-	routes.ApiRoutes()
+	internal.ApiRoutes()
 	env := os.Getenv("DEVCONTAINER")
 	if env == "true" {
 		log.Info("Running in development mode: Serving from local filesystem")
-		app.Static("/", "../web/build") // Serve from local folder
+		app.Static("/", "./web/build") // Serve from local folder
 
-		app.Get("/*", func(c *fiber.Ctx) error {
-			return c.SendFile("web/build/index.html")
+		app.Get("*", func(c *fiber.Ctx) error {
+			return c.SendFile("./web/build/index.html")
 		})
 	} else {
 		log.Info("Running in production mode: Serving embedded files")

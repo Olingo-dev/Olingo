@@ -1,16 +1,27 @@
 package pipeline
 
-type Request[T any] func(string) (T, error)
+type Request[T any] func(T) (T, error)
+type Transformer[T any, U any] func(T) (U, error)
 
-func Process[T any](value string, requests ...Request[T]) (T, error) {
-	var zero T
+func Process[T any](value T, requests ...Request[T]) (T, error) {
 	var err error
-	var result T
 	for _, request := range requests {
-		result, err = request(value)
+		value, err = request(value)
 		if err != nil {
+			return value, err
+		}
+	}
+	return value, nil
+}
+
+func ProcessWithTransform[T any, U any](value T, transform Transformer[T, U], requests ...Request[T]) (U, error) {
+	var err error
+	for _, request := range requests {
+		value, err = request(value)
+		if err != nil {
+			var zero U
 			return zero, err
 		}
 	}
-	return result, nil
+	return transform(value)
 }
