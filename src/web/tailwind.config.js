@@ -5,7 +5,7 @@ export default {
 	theme: {
     	extend: {
 			backgroundImage: {
-				art: 'url("/art/art_2.jpg")'
+				authArt: 'url("/art/auth_art.jpg")'
 			},
     		borderRadius: {
     			lg: 'var(--radius)',
