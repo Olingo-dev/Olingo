@@ -19,7 +19,7 @@ export function GroupsPage() {
 
     const [groups, setGroups] = useState<Group[]>([]);
         useEffect(() => {
-            fetch("http://localhost:8080/api/groups").then(response => response.json()).then((data: GroupApiResponse) => {
+            fetch("/api/groups").then(response => response.json()).then((data: GroupApiResponse) => {
                 setGroups(data.groups)
             });
         }, []);

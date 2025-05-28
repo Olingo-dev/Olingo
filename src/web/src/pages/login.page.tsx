@@ -66,7 +66,7 @@ export function LoginPage() {
             
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit">Sign In</Button>
       </form>
     </Form>
   )

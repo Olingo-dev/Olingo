@@ -14,7 +14,7 @@ export function HomePage() {
 
     const [groups, setGroups] = useState<Group[]>([]);
     useEffect(() => {
-        fetch("http://localhost:8080/api/groups").then(response => response.json()).then((data: GroupApiResponse) => {
+        fetch("/api/groups").then(response => response.json()).then((data: GroupApiResponse) => {
             setGroups(data.groups)
         });
     }, []);
@@ -83,7 +83,7 @@ export function HomePage() {
                                         ))
                                         ) : (
                                         <TableRow>
-                                            <TableCell colSpan={5} className="text-center text-gray-500">
+                                            <TableCell colSpan={6} className="text-center text-gray-500">
                                             No groups available
                                             </TableCell>
                                         </TableRow>
