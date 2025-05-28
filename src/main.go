@@ -19,15 +19,16 @@ import (
 //go:embed web/build/*
 var embeddedFiles embed.FS
 
-var commitHash string
+// var commitHash string
 
 func main() {
 
 	// config.InitConfig()
 	config.InitWebServer()
 
-	registry.GetRegistry().Register("version", commitHash)
-
+	version := os.Getenv("VERSION")
+	log.Info(version)
+	registry.GetRegistry().Register("version", version)
 	app := config.GetWebServer()
 	// cfg := config.GetConfig()
 

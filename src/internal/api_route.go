@@ -17,6 +17,7 @@ func ApiRoutes() {
 	api.Get("/version", func(context *fiber.Ctx) error {
 		return context.JSON(fiber.Map{"version": registry.GetRegistry().Get("version").(string)})
 	})
+	// DOCKER NETWORK
 	api.Get("/networks", func(context *fiber.Ctx) error {
 		return context.Status(200).JSON(fiber.Map{"message": "Hello world"})
 	})
