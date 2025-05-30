@@ -25,6 +25,9 @@ func AuthMiddleware(context *fiber.Ctx) error {
 	for _, path := range publicPaths {
 		if context.Path() == path {
 			if config.IsFirstTimeInstallation() {
+				if path == "/auth/first-time" {
+					return context.Next()
+				}
 				return context.Redirect("/auth/first-time")
 			}
 			return context.Next()
