@@ -64,7 +64,7 @@ func main() {
 			if err != nil {
 				return fiber.ErrNotFound
 			}
-			return c.Type("html").Send(file)
+			return c.Status(200).Type("html").Send(file)
 		})
 	}
 
