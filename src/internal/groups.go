@@ -5,13 +5,14 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
+	"github.com/nidrux/olingo/internal/database"
 	"github.com/nidrux/olingo/internal/models"
 	"github.com/nidrux/olingo/pkg/pipeline"
 	"github.com/nidrux/olingo/pkg/util"
 )
 
 func GetAllGroups() (*fiber.Map, error) {
-	db := GetDatabaseConnection()
+	db := database.GetDatabaseConnection()
 	var groups []models.Group
 	if err := db.Find(&groups).Error; err != nil {
 		return nil, err
@@ -24,7 +25,7 @@ func CreateGroup(groupName *string) (*fiber.Map, error) {
 	if err != nil {
 		return nil, err
 	}
-	db := GetDatabaseConnection()
+	db := database.GetDatabaseConnection()
 	createdGroup := &models.Group{Name: name, ID: uuid.New().String(), CreatedBy: uuid.New().String()}
 	result := db.Create(createdGroup)
 	if result.Error != nil {

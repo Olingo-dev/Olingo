@@ -5,6 +5,7 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v4"
+	"github.com/nidrux/olingo/internal/config"
 	"github.com/nidrux/olingo/internal/models/authentication/permissions"
 )
 
@@ -23,6 +24,9 @@ func AuthMiddleware(context *fiber.Ctx) error {
 	}
 	for _, path := range publicPaths {
 		if context.Path() == path {
+			if config.IsFirstTimeInstallation() {
+				return context.Redirect("/auth/first-time")
+			}
 			return context.Next()
 		}
 	}

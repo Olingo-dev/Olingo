@@ -8,6 +8,7 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/limiter"
 	"github.com/nidrux/olingo/internal/auth"
 	"github.com/nidrux/olingo/internal/config"
+	"github.com/nidrux/olingo/internal/database"
 	"github.com/nidrux/olingo/internal/models/authentication"
 	"github.com/nidrux/olingo/internal/models/authentication/permissions"
 	"github.com/nidrux/olingo/pkg/util"
@@ -30,7 +31,7 @@ func AuthRoutes() {
 			return context.Status(fiber.StatusBadRequest).JSON(util.GenerateErrorJson("Email and password are required"))
 		}
 		var user authentication.User
-		db := GetDatabaseConnection()
+		db := database.GetDatabaseConnection()
 		if err := db.Where("email = ?", req.Email).First(&user).Error; err != nil {
 			return context.Status(fiber.StatusUnauthorized).JSON(util.GenerateErrorJson("Invalid credentials"))
 		}
@@ -58,12 +59,8 @@ func AuthRoutes() {
 		},
 	}))
 	firstTimeGroup.Post("/", func(context *fiber.Ctx) error {
-		var count int64
-		db := GetDatabaseConnection()
-		db.Model(&authentication.User{}).
-			Where("permissions & ? != 0", permissions.AllowAll).
-			Count(&count)
-		if count > 0 {
+		isFirstInstallation := config.IsFirstTimeInstallation()
+		if !isFirstInstallation {
 			return context.Redirect("/auth/login")
 		}
 		var req authentication.UserBody
@@ -83,6 +80,7 @@ func AuthRoutes() {
 			Password:    string(hashedPassword),
 			Permissions: permissions.AllowAll,
 		}
+		db := database.GetDatabaseConnection()
 		if err := db.Create(&user).Error; err != nil {
 			return context.Status(fiber.StatusInternalServerError).JSON(util.GenerateErrorJson("Failed to create user"))
 		}
@@ -91,7 +89,6 @@ func AuthRoutes() {
 			return context.Status(fiber.StatusInternalServerError).JSON(util.GenerateErrorJson("Failed to generate JWT"))
 		}
 		context.Cookie(auth.CreateCookie(token))
-
 		return context.Redirect("/")
 	})
 }
