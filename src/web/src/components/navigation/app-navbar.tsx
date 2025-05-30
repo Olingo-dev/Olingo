@@ -2,7 +2,7 @@
 import { cn } from "@/lib/utils"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
-import { Sun, User } from "lucide-react"
+import { LogOut, Sun, User } from "lucide-react"
 
 interface NavBarProps {
     className?: string
@@ -40,6 +40,7 @@ export function AppNavBar({ className }: NavBarProps) {
                             <DropdownMenuSeparator />
                             <DropdownMenuItem><User />My profile</DropdownMenuItem>
                             <DropdownMenuItem><Sun/>Switch to light</DropdownMenuItem>
+                            <DropdownMenuItem className="text-danger" onClick={() => fetch("/b/auth/logout", {method: "POST"}).then(res => res.redirected ? window.location.href = res.url : null)}><LogOut/>Logout</DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </div>

@@ -5,3 +5,7 @@ import "github.com/gofiber/fiber/v2"
 func GenerateErrorJson(message string) *fiber.Map {
 	return &fiber.Map{"error": message}
 }
+
+func GenerateSuccesRedirectJson(url string) *fiber.Map {
+	return &fiber.Map{"redirect": url}
+}

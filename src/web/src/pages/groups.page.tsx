@@ -2,50 +2,82 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarSeparator, MenubarTrigger } from "@/components/ui/menubar";
 import { ExternalLink, Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Group, GroupApiResponse } from "types/api";
+import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { FormSchema } from "@/lib/schemas/validation";
+import { z } from "zod";
 
 export function GroupsPage() {
 
 
     const [groups, setGroups] = useState<Group[]>([]);
         useEffect(() => {
-            fetch("http://localhost:8080/api/groups").then(response => response.json()).then((data: GroupApiResponse) => {
+            fetch("/api/groups").then(response => response.json()).then((data: GroupApiResponse) => {
                 setGroups(data.groups)
             });
         }, []);
 
+    const form = useForm<z.infer<typeof FormSchema>>({
+        resolver: zodResolver(FormSchema),
+        defaultValues: {
+            groupName: "",
+        },
+        })
+        
+        function onSubmit(data: z.infer<typeof FormSchema>) {
+            console.log(data);
+        }
+
     return (
     <div className="p-3">
         <h1 className="text-xl bg-sidebar p-2 rounded-md">Groups</h1>
-        <Menubar className="max-w-max bg-navbackground my-4" >
-            <MenubarMenu>
-                <MenubarTrigger>Create</MenubarTrigger>
-                <MenubarContent>
-                <MenubarItem>
-                    From image
-                </MenubarItem>
-                <MenubarSeparator />
-                <MenubarItem>From git</MenubarItem>
-                <MenubarSeparator />
-                <MenubarItem>From blank</MenubarItem>
-                </MenubarContent>
-            </MenubarMenu>
-            <MenubarMenu>
-                <MenubarTrigger>Export</MenubarTrigger>
-                <MenubarContent>
-                <MenubarItem>
-                    To CSV
-                </MenubarItem>
-                </MenubarContent>
-            </MenubarMenu>
-            <Button>
-                <Plus /> New group
-            </Button>
-        </Menubar>
+        <Sheet>
+            <SheetTrigger>
+                <Button>
+                    <Plus /> New group
+                </Button>
+            </SheetTrigger>
+            <SheetContent className="flex flex-col">
+                <SheetHeader>
+                    <SheetTitle>Create a new group</SheetTitle>
+                    <SheetDescription>
+                        Create a new group to organize your Docker containers. This grouping is for organizational purposes only and does not affect container behavior.
+                    </SheetDescription>
+                </SheetHeader>
+                <div className="grow">
+                    <Form {...form}>
+                        <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
+                            <FormField
+                            control={form.control}
+                            name="groupName"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Group name</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="my-awesome-group" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                            />
+                        </form>
+                    </Form>
+                </div>
+                <SheetFooter>
+                    <SheetClose asChild>
+                        <Button variant="destructive">Cancel</Button>
+                    </SheetClose>
+                    <Button type="submit">Create</Button>
+                </SheetFooter>
+            </SheetContent>
+        </Sheet>
         <Table>
             <TableHeader>
                 <TableRow className="bg-navbackground">
@@ -92,7 +124,7 @@ export function GroupsPage() {
                     ))
                     ) : (
                     <TableRow>
-                        <TableCell colSpan={5} className="text-center text-gray-500">
+                        <TableCell colSpan={6} className="text-center text-gray-500">
                         No groups available
                         </TableCell>
                     </TableRow>

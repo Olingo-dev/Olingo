@@ -8,4 +8,5 @@ export type NavigationItem = {
     icon: ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>,
     description?: string
     subItems?: NavigationItem[]
+    future?: boolean
 }

@@ -7,6 +7,9 @@ import { ContainersPage } from './pages/containers.page.tsx'
 import { NetworksPage } from './pages/networks.page.tsx'
 import { GroupsPage } from './pages/groups.page.tsx'
 import { HomePage } from './pages/home.page.tsx'
+import { LoginPage } from './pages/login.page.tsx'
+import { AuthLayout } from './layouts/auth.layout.tsx'
+import { FirstTimePage } from './pages/firstTime.page.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -17,6 +20,10 @@ createRoot(document.getElementById('root')!).render(
           <Route path='/containers' element={<ContainersPage />} />        
           <Route path='/networks' element={<NetworksPage />} />  
           <Route path='/groups' element={<GroupsPage />} />      
+        </Route>
+        <Route path='/auth' element={<AuthLayout />}>
+          <Route path='login' element={<LoginPage />} />
+          <Route path='first-time' element={<FirstTimePage />} />      
         </Route>
       </Routes>
     </BrowserRouter>

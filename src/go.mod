@@ -2,7 +2,7 @@ module github.com/nidrux/olingo
 
 go 1.23.4
 
-require github.com/gofiber/fiber/v2 v2.52.6 // direct
+require github.com/gofiber/fiber/v2 v2.52.8 // direct
 
 require (
 	github.com/andybalholm/brotli v1.1.0 // indirect
@@ -23,10 +23,10 @@ require (
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.51.0 // indirect
 	github.com/valyala/tcplisten v1.0.0 // indirect
-	golang.org/x/crypto v0.31.0 // indirect
-	golang.org/x/sync v0.12.0 // indirect
-	golang.org/x/sys v0.28.0 // indirect
-	golang.org/x/text v0.23.0 // indirect
+	golang.org/x/crypto v0.38.0 // indirect
+	golang.org/x/sync v0.14.0 // indirect
+	golang.org/x/sys v0.33.0 // indirect
+	golang.org/x/text v0.25.0 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1 // indirect
 	gorm.io/driver/sqlite v1.5.7 // indirect
 	gorm.io/gorm v1.25.12 // indirect
@@ -43,11 +43,21 @@ require (
 	github.com/fatih/color v1.17.0 // indirect
 	github.com/fsnotify/fsnotify v1.7.0 // indirect
 	github.com/gobwas/glob v0.2.3 // indirect
+	github.com/gofiber/fiber v1.14.6
 	github.com/gohugoio/hugo v0.134.3 // indirect
+	github.com/golang-jwt/jwt v3.2.2+incompatible
+	github.com/golang-jwt/jwt/v4 v4.5.2 // indirect
 	github.com/pelletier/go-toml v1.9.5 // indirect
 	github.com/pelletier/go-toml/v2 v2.2.3 // indirect
+	github.com/philhofer/fwd v1.1.3-0.20240916144458-20a13a1f6b7c // indirect
 	github.com/spf13/afero v1.11.0 // indirect
 	github.com/spf13/cast v1.7.0 // indirect
 	github.com/tdewolff/parse/v2 v2.7.15 // indirect
+	github.com/tinylib/msgp v1.2.5 // indirect
 	google.golang.org/protobuf v1.34.2 // indirect
+)
+
+require (
+	github.com/gofiber/utils v0.0.10 // indirect
+	github.com/gorilla/schema v1.1.0 // indirect
 )

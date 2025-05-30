@@ -1,4 +1,4 @@
-import { Home, Settings, Database, Container, Network, File, HardDrive, Book, Users, Group, Package} from "lucide-react"
+import { Home, Settings, Database, Container, Network, File, HardDrive, Book, Users, Group, Package, GitBranch, Megaphone} from "lucide-react"
 import { NavigationItem } from "../types/NavigationItem"
 const navigationItems: NavigationItem[] = [
     {
@@ -32,19 +32,22 @@ const navigationItems: NavigationItem[] = [
         title: "Volumes",
         url: "/#",
         group: "Docker",
-        icon: Database
+        icon: Database,
+        future: true
     },
     {
         title: "Images",
         url: "/#",
         group: "Docker",
-        icon: File
+        icon: File,
+        future: true
     },
     {
         title: "Nodes",
         url: "/#",
         icon: HardDrive,
         group: "Docker Swarm",
+        future: true
     },
     {
         title: "Users",
@@ -57,6 +60,21 @@ const navigationItems: NavigationItem[] = [
         url: "/#",
         icon: Group,
         group: "Management",
+        future: true
+    },
+    {
+        title: "Notifications",
+        url: "/#",
+        icon: Megaphone,
+        group: "Integrations",
+        future: true
+    },
+    {
+        title: "Git providers",
+        url: "/#",
+        icon: GitBranch,
+        group: "Integrations",
+        future: true
     },
     {
         title: "Settings",

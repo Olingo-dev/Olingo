@@ -2,6 +2,9 @@ package config
 
 import (
 	"github.com/gofiber/fiber/v2/log"
+	"github.com/nidrux/olingo/internal/database"
+	"github.com/nidrux/olingo/internal/models/authentication"
+	"github.com/nidrux/olingo/internal/models/authentication/permissions"
 	"github.com/nidrux/olingo/pkg/pipeline"
 	"github.com/nidrux/olingo/pkg/registry"
 	"github.com/nidrux/olingo/pkg/util"
@@ -43,4 +46,13 @@ func InitConfig() {
 }
 func GetConfig() *config {
 	return registry.GetRegistry().Get("config").(*config)
+}
+
+func IsFirstTimeInstallation() bool {
+	var count int64
+	db := database.GetDatabaseConnection()
+	db.Model(&authentication.User{}).
+		Where("permissions & ? != 0", permissions.AllowAll).
+		Count(&count)
+	return count <= 0
 }
