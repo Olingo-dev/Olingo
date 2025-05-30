@@ -17,9 +17,7 @@ func AuthMiddleware(c *fiber.Ctx) error {
 		// CHECK AUTH HEADER. TODO VALIDATE TOKEN
 		authHeader := c.Get("Authorization")
 		if authHeader == "" {
-			return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
-				"error": "unauthorized",
-			})
+			return c.Redirect("/auth/login")
 		}
 		return c.Next()
 	}
