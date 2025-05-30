@@ -14,6 +14,7 @@ import (
 	"github.com/nidrux/olingo/internal"
 	"github.com/nidrux/olingo/internal/auth"
 	"github.com/nidrux/olingo/internal/config"
+	"github.com/nidrux/olingo/internal/database"
 	"github.com/nidrux/olingo/pkg/registry"
 )
 
@@ -33,7 +34,7 @@ func main() {
 	app := config.GetWebServer()
 	// cfg := config.GetConfig()
 
-	internal.InitDatabase()
+	database.InitDatabase()
 
 	app.Use(logger.New())
 	app.Use(requestid.New())
