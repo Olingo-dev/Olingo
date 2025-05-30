@@ -9,6 +9,7 @@ import { GroupsPage } from './pages/groups.page.tsx'
 import { HomePage } from './pages/home.page.tsx'
 import { LoginPage } from './pages/login.page.tsx'
 import { AuthLayout } from './layouts/auth.layout.tsx'
+import { FirstTimePage } from './pages/firstTime.page.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -21,7 +22,8 @@ createRoot(document.getElementById('root')!).render(
           <Route path='/groups' element={<GroupsPage />} />      
         </Route>
         <Route path='/auth' element={<AuthLayout />}>
-          <Route path='login' element={<LoginPage />} />      
+          <Route path='login' element={<LoginPage />} />
+          <Route path='first-time' element={<FirstTimePage />} />      
         </Route>
       </Routes>
     </BrowserRouter>

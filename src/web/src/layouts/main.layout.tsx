@@ -4,12 +4,14 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { Outlet } from "react-router";
 import github from "../assets/icons/github.svg";
 import { Version } from "@/components/version";
+import { DottedBackground } from "@/components/dottedBackground";
 
 
 export function MainLayout() {
 
     return (
         <div className="h-screen flex flex-col">
+            <DottedBackground />
             <header className="h-min">
                 <AppNavBar />
             </header>

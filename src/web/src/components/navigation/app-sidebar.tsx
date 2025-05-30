@@ -48,9 +48,9 @@ export function AppSidebar({ className }: AppSidebarProps) {
                                         {item.subItems ? (
                                             <Collapsible defaultOpen>
                                                 <CollapsibleTrigger asChild>
-                                                    <SidebarMenuButton>
+                                                    <SidebarMenuButton disabled={item.future}>
                                                         <item.icon  />
-                                                        <span>{item.title}</span>
+                                                        <span className={item.future ? "text-muted" : ""}>{item.title}</span>
                                                         <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
                                                     </SidebarMenuButton>
                                                 </CollapsibleTrigger>
@@ -58,10 +58,10 @@ export function AppSidebar({ className }: AppSidebarProps) {
                                                     <SidebarMenuSub>
                                                         {item.subItems.map((subItem) => (
                                                             <SidebarMenuSubItem key={subItem.title}>
-                                                                <SidebarMenuSubButton asChild>
+                                                                <SidebarMenuSubButton asChild isActive={!item.future}>
                                                                     <a href={subItem.url}>
                                                                         {subItem.icon && <subItem.icon  />}
-                                                                        <span>{subItem.title}</span>
+                                                                        <span className={item.future ? "text-muted" : ""}>{subItem.title}</span>
                                                                     </a>
                                                                 </SidebarMenuSubButton>
                                                             </SidebarMenuSubItem>

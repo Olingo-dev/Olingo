@@ -11,6 +11,6 @@ type User struct {
 }
 
 type UserBody struct {
-	Email    string `json:"email"`
+	Email    string `json:"username"`
 	Password string `json:"password"`
 }
