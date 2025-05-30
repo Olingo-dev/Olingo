@@ -22,7 +22,7 @@ export function AuthLayout() {
                             </div>   
                             <Version className="mt-5"/>
                         </div>
-                        <div className="bg-authArt bg-center bg-cover mix-blend-lighten"/>
+                        <div className="bg-authArt bg-center bg-cover rounded-r-lg"/>
                     </Card>
             </main>
     )
