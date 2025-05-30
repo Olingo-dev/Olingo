@@ -17,12 +17,30 @@ import (
 func AuthRoutes() {
 	const BASE_PATH string = "/b/auth"
 	api := config.GetWebServer().Group(BASE_PATH)
-	// CONFIG
 	api.Post("/login", func(context *fiber.Ctx) error {
 		var req authentication.UserBody
 		if err := context.BodyParser(&req); err != nil {
-			context.Status(fiber.StatusBadRequest).JSON(util.GenerateErrorJson("Invalid request body"))
+			return context.Status(fiber.StatusBadRequest).JSON(util.GenerateErrorJson("Invalid request body"))
 		}
+		if req.Email == "" || req.Password == "" {
+			return context.Status(fiber.StatusBadRequest).JSON(util.GenerateErrorJson("Email and password are required"))
+		}
+		var user authentication.User
+		db := GetDatabaseConnection()
+		if err := db.Where("email = ?", req.Email).First(&user).Error; err != nil {
+			return context.Status(fiber.StatusUnauthorized).JSON(util.GenerateErrorJson("Invalid credentials"))
+		}
+
+		if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(req.Password)); err != nil {
+			return context.Status(fiber.StatusUnauthorized).JSON(util.GenerateErrorJson("Invalid credentials"))
+		}
+
+		token, err := auth.GenerateJWT(user.ID, user.Email, user.Permissions)
+		if err != nil {
+			return context.Status(fiber.StatusInternalServerError).JSON(util.GenerateErrorJson("Failed to generate JWT"))
+		}
+		context.Cookie(auth.CreateCookie(token))
+
 		return context.Redirect("/")
 	})
 
@@ -64,19 +82,11 @@ func AuthRoutes() {
 		if err := db.Create(&user).Error; err != nil {
 			return context.Status(fiber.StatusInternalServerError).JSON(util.GenerateErrorJson("Failed to create user"))
 		}
-		tokenString, err := auth.GenerateJWT(user.ID, user.Email, user.Permissions)
+		token, err := auth.GenerateJWT(user.ID, user.Email, user.Permissions)
 		if err != nil {
 			return context.Status(fiber.StatusInternalServerError).JSON(util.GenerateErrorJson("Failed to generate JWT"))
 		}
-		context.Cookie(&fiber.Cookie{
-			Name:     "olingo_auth_token",
-			Value:    tokenString,
-			Expires:  time.Now().Add(24 * time.Hour),
-			HTTPOnly: true,
-			Secure:   false,
-			Path:     "/",
-			SameSite: "Strict",
-		})
+		context.Cookie(auth.CreateCookie(token))
 
 		return context.Redirect("/")
 	})
