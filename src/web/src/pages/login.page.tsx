@@ -34,6 +34,9 @@ export function LoginPage() {
     function onSubmit(data: z.infer<typeof FormSchema>) {
       fetch("/b/auth/login", {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
         body:  JSON.stringify(data, null, 2)
       }).then((res) => {
         if (res.redirected)
