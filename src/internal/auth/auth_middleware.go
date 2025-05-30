@@ -9,7 +9,7 @@ import (
 	"github.com/nidrux/olingo/internal/models/authentication/permissions"
 )
 
-var routePermissions = map[string]int{
+var routePermissions = map[string]int{ // EXAMPLE
 	"/admin/users":       permissions.AllowAll,
 	"/groups/create":     permissions.CreateGroup,
 	"/groups/delete":     permissions.DeleteGroup,
