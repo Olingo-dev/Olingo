@@ -17,6 +17,10 @@ import (
 func AuthRoutes() {
 	const BASE_PATH string = "/b/auth"
 	api := config.GetWebServer().Group(BASE_PATH)
+	api.Post("/logout", func(context *fiber.Ctx) error {
+		context.ClearCookie("olingo_auth_token")
+		return context.Redirect("/auth/login")
+	})
 	api.Post("/login", func(context *fiber.Ctx) error {
 		var req authentication.UserBody
 		if err := context.BodyParser(&req); err != nil {
