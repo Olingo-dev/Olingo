@@ -1,6 +1,7 @@
 package auth
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/gofiber/fiber/v2"
@@ -18,6 +19,7 @@ var routePermissions = map[string]int{ // EXAMPLE
 }
 
 func AuthMiddleware(context *fiber.Ctx) error {
+	fmt.Println("Running AUTH MIDDLEWARE")
 	publicPaths := []string{
 		"/auth/login", "/favicon.ico", "/b/auth/logout",
 		"/b/auth/first-time", "/auth/first-time", "/api/version",
@@ -25,7 +27,7 @@ func AuthMiddleware(context *fiber.Ctx) error {
 	for _, path := range publicPaths {
 		if context.Path() == path {
 			if config.IsFirstTimeInstallation() {
-				if path == "/auth/first-time" {
+				if path == "/auth/first-time" || path == "/b/auth/first-time" {
 					return context.Next()
 				}
 				return context.Redirect("/auth/first-time")
@@ -46,7 +48,6 @@ func AuthMiddleware(context *fiber.Ctx) error {
 	if tokenStr == "" {
 		return context.Redirect("/auth/login")
 	}
-
 	token, err := jwt.Parse(tokenStr, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fiber.ErrUnauthorized

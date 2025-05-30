@@ -37,7 +37,7 @@ export function FirstTimePage() {
         headers: {
           "Content-Type": "application/json"
         },
-        body:  JSON.stringify(data, null, 2)
+        body:  JSON.stringify(data, null, 2),
       }).then((res) => {
         if (res.redirected)
           window.location.replace(res.url)

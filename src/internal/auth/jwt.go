@@ -1,6 +1,8 @@
 package auth
 
 import (
+	"log"
+	"os"
 	"time"
 
 	"github.com/gofiber/fiber/v2"
@@ -21,13 +23,24 @@ func GenerateJWT(userID uint, email string, permissions int) (string, error) {
 }
 
 func CreateCookie(token string) *fiber.Cookie {
-	return &fiber.Cookie{
+	log.Print("Generating cookie")
+	cookie := &fiber.Cookie{
 		Name:     "olingo_auth_token",
 		Value:    token,
 		Expires:  time.Now().Add(24 * time.Hour),
 		HTTPOnly: true,
-		Secure:   false,
 		Path:     "/",
 		SameSite: "Strict",
 	}
+	development := os.Getenv("DEVCONTAINER")
+	if development == "true" {
+		log.Print("Using insecure cookies in development mode.")
+		cookie.Secure = false
+		cookie.HTTPOnly = false
+	} else {
+		cookie.Secure = true
+		cookie.HTTPOnly = false
+	}
+
+	return cookie
 }
