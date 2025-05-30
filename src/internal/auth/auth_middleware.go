@@ -1,7 +1,6 @@
 package auth
 
 import (
-	"fmt"
 	"strings"
 
 	"github.com/gofiber/fiber/v2"
@@ -19,7 +18,6 @@ var routePermissions = map[string]int{ // EXAMPLE
 }
 
 func AuthMiddleware(context *fiber.Ctx) error {
-	fmt.Println("Running AUTH MIDDLEWARE")
 	publicPaths := []string{
 		"/auth/login", "/favicon.ico", "/b/auth/logout",
 		"/b/auth/first-time", "/auth/first-time", "/api/version",
