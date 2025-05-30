@@ -42,6 +42,7 @@ func main() {
 	}))
 	app.Use(auth.AuthMiddleware)
 	// First init the api routes. every other route will fallback to the react dist
+	internal.AuthRoutes()
 	internal.ApiRoutes()
 	env := os.Getenv("DEVCONTAINER")
 	if env == "true" {

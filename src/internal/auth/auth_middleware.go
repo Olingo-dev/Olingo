@@ -8,7 +8,7 @@ import (
 
 func AuthMiddleware(c *fiber.Ctx) error {
 	switch c.Path() {
-	case "/auth/login", "/favicon.ico", "/auth/logout", "/art/*", "/api/version":
+	case "/auth/login", "/favicon.ico", "/b/auth/logout", "/art/*", "/api/version", "/b/auth/first-time", "/b/auth/login":
 		return c.Next()
 	default:
 		if strings.HasPrefix(c.Path(), "/assets") || strings.HasPrefix(c.Path(), "/art") || strings.HasPrefix(c.Path(), "/Olingo.svg") {

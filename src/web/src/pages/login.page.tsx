@@ -32,10 +32,13 @@ export function LoginPage() {
   })
  
     function onSubmit(data: z.infer<typeof FormSchema>) {
-      fetch("/auth/login", {
+      fetch("/b/auth/login", {
         method: "POST",
         body:  JSON.stringify(data, null, 2)
-      }).then((res) => console.log(res))
+      }).then((res) => {
+        if (res.redirected)
+          window.location.replace(res.url)
+      })
     }   
  
   return (

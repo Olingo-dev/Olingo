@@ -9,3 +9,8 @@ type User struct {
 	Roles       []Role `gorm:"many2many:user_roles"`
 	Permissions int
 }
+
+type UserBody struct {
+	Email    string `json:"email"`
+	Password string `json:"password"`
+}

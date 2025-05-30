@@ -9,9 +9,8 @@ import (
 	"github.com/nidrux/olingo/pkg/util"
 )
 
-const BASE_PATH string = "/api"
-
 func ApiRoutes() {
+	const BASE_PATH string = "/api"
 	api := config.GetWebServer().Group(BASE_PATH)
 	// CONFIG
 	api.Get("/version", func(context *fiber.Ctx) error {
