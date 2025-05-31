@@ -1,7 +1,6 @@
 package internal
 
 import (
-	"log"
 	"time"
 
 	"github.com/gofiber/fiber/v2"
@@ -67,7 +66,6 @@ func AuthRoutes() {
 		if err := context.BodyParser(&req); err != nil {
 			context.Status(fiber.StatusBadRequest).JSON(util.GenerateErrorJson("Invalid request body"))
 		}
-		log.Print(req.Password)
 		if req.Email == "" || req.Password == "" {
 			return context.Status(fiber.StatusBadRequest).JSON(util.GenerateErrorJson("Email and password are required"))
 		}
