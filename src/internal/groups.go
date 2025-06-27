@@ -1,8 +1,6 @@
 package internal
 
 import (
-	"log"
-
 	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
 	"github.com/nidrux/olingo/internal/database"
@@ -20,7 +18,6 @@ func GetAllGroups() (*fiber.Map, error) {
 	return &fiber.Map{"groups": groups}, nil
 }
 func CreateGroup(groupName *string) (*fiber.Map, error) {
-	log.Print("Creating database entry")
 	name, err := pipeline.Process(*groupName, util.NotEmpty)
 	if err != nil {
 		return nil, err

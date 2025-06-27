@@ -5,7 +5,6 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { ExternalLink, Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Group, GroupApiResponse } from "types/api";
-import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -13,6 +12,8 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { FormSchema } from "@/lib/schemas/validation";
 import { z } from "zod";
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { DialogTrigger } from "@radix-ui/react-dialog";
 
 export function GroupsPage() {
 
@@ -32,52 +33,59 @@ export function GroupsPage() {
         })
         
         function onSubmit(data: z.infer<typeof FormSchema>) {
-            console.log(data);
+            // TODO SHOW ERROR MESSAGE WHEN SOMETHING FAILS.
+            fetch("/api/groups", {
+                method: "post",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data, null, 2)
+            }).then(response => response.json())
+            .then(data => console.log(data))
+            .catch(error => console.log(error))
         }
 
     return (
     <div className="p-3">
         <h1 className="text-xl bg-sidebar p-2 rounded-md">Groups</h1>
-        <Sheet>
-            <SheetTrigger>
+        <Dialog>
+            <DialogTrigger>
                 <Button>
                     <Plus /> New group
                 </Button>
-            </SheetTrigger>
-            <SheetContent className="flex flex-col">
-                <SheetHeader>
-                    <SheetTitle>Create a new group</SheetTitle>
-                    <SheetDescription>
-                        Create a new group to organize your Docker containers. This grouping is for organizational purposes only and does not affect container behavior.
-                    </SheetDescription>
-                </SheetHeader>
-                <div className="grow">
-                    <Form {...form}>
-                        <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+                <DialogTitle>Create a new group</DialogTitle>
+                <DialogDescription>
+                Create a new group to organize your Docker containers. This grouping is for organizational purposes only and does not affect container behavior.
+                </DialogDescription>
+            </DialogHeader>
+            <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)}>
                             <FormField
                             control={form.control}
                             name="groupName"
                             render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Group name</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="my-awesome-group" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
+                                <>
+                                    <FormItem>
+                                        <FormLabel>Group name</FormLabel>
+                                        <FormControl>
+                                            <Input placeholder="my-awesome-group" {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                    <DialogFooter>
+                                        <DialogClose asChild>
+                                        <Button variant="destructive">Cancel</Button>
+                                        </DialogClose>
+                                        <Button type="submit">Create</Button>
+                                    </DialogFooter>
+                                </>
+                                )}
                             />
-                        </form>
-                    </Form>
-                </div>
-                <SheetFooter>
-                    <SheetClose asChild>
-                        <Button variant="destructive">Cancel</Button>
-                    </SheetClose>
-                    <Button type="submit">Create</Button>
-                </SheetFooter>
-            </SheetContent>
-        </Sheet>
+                    </form>
+                </Form>
+            </DialogContent>
+        </Dialog>
         <Table>
             <TableHeader>
                 <TableRow className="bg-navbackground">

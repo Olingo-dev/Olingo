@@ -36,7 +36,6 @@ func main() {
 
 	database.InitDatabase()
 
-	app.Use(logger.New())
 	app.Use(requestid.New())
 	app.Use(logger.New(logger.Config{
 		Format: "${pid} ${locals:requestid} ${status} - ${method} ${path}\n",

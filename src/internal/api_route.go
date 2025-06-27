@@ -39,13 +39,18 @@ func ApiRoutes() {
 		if err := context.BodyParser(&req); err != nil {
 			context.Status(fiber.StatusBadRequest).JSON(util.GenerateErrorJson("Invalid request body"))
 		}
-		name, err := pipeline.Process(req.Name, util.NotEmpty, util.MaxLength[string](65))
+		name, err := pipeline.Process(req.GroupName,
+			util.NotEmpty,
+			util.MaxLength[string](65),
+			util.MinLength[string](5),
+			util.Regex[string]("^[a-z-]+$", "Only lowercase letters (a-z) and hyphens (-) are allowed"),
+		)
 		if err != nil {
-			context.Status(fiber.StatusBadRequest).JSON(util.GenerateErrorJson(err.Error()))
+			return context.Status(fiber.StatusBadRequest).JSON(util.GenerateErrorJson(err.Error()))
 		}
 		result, err := CreateGroup(&name)
 		if err != nil {
-			return context.SendStatus(fiber.StatusFailedDependency)
+			return context.Status(fiber.StatusBadRequest).JSON(util.GenerateErrorJson(err.Error()))
 		}
 		return context.Status(200).JSON(result)
 	})
