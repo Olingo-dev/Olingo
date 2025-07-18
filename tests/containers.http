@@ -1,0 +1,8 @@
+GET {{host}}/container
+#
+POST {{host}}/container
+
+{
+    "name": "NginxTest2",
+    "image": "nginx:latest"
+}
