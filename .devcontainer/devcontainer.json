@@ -10,6 +10,9 @@
 	"containerEnv": {
 		"DEVCONTAINER": "true"
 	},
+	"mounts": [
+    "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
+  	],
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
 
@@ -17,12 +20,14 @@
 	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "go version",
+	"postCreateCommand": "sh ./setup.sh",
 
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"humao.rest-client"
+				"anweber.vscode-httpyac",
+                "golang.go",
+				"ms-vscode.live-server"
 			]
 		}
 	}
