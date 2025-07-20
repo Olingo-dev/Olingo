@@ -6,3 +6,7 @@ POST {{host}}/containers
     "name": "NginxTest2",
     "image": "nginx:latest"
 }
+#
+DELETE {{host}}/containers/f3e00f3d4a127e4a742077c1abec10d32e61aed03d60cdb46c119256dfefbde3
+#
+DELETE {{host}}/containers/f3e00f3d4a127e4a742077c1abec10d32e61aed03d60cdb46c119256dfefbde3?mode=force
