@@ -44,6 +44,7 @@ func main() {
 
 	// Endpoints
 	router := gin.Default()
+	router.Use(config.Cors())
 	notifications.Endpoints(router, cli)
 	containers.Endpoints(router, cli)
 	router.Run()
