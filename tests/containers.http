@@ -1,6 +1,6 @@
-GET {{host}}/container
+GET {{host}}/containers
 #
-POST {{host}}/container
+POST {{host}}/containers
 
 {
     "name": "NginxTest2",
