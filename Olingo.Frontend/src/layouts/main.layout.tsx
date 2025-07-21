@@ -58,7 +58,7 @@ export default function MainLayout() {
             <section className="relative">
             <SidebarProvider>
                 <MainSidebar />
-                <main className="bg-main">
+                <main className="bg-main w-full">
                     <SidebarTrigger />
                     <section className="p-4">
                         <Outlet />
