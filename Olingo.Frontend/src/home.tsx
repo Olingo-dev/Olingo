@@ -8,18 +8,24 @@ import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./components/ui/dropdown-menu"
-import { ChartNoAxesColumn, ChevronDown, Container, MoreHorizontal, Plus, ScanEye} from "lucide-react"
-import { Checkbox } from "./components/ui/checkbox"
 
-type DockerContainer = {
+import { ChartNoAxesColumn, ChevronDown, ExternalLink, Plus} from "lucide-react"
+import { Checkbox } from "./components/ui/checkbox"
+import ContainerTableActions from "./components/actions/ContainerTableActions"
+
+
+export type DockerPort = {
+  IP: string | undefined,
+  PrivatePort: number,
+  PublicPort: number,
+  Type: string
+}
+export type DockerContainer = {
     Id: string,
     Name: string,
-    Ports: number[]
+    Ports: DockerPort[]
     Image: string
     CreatedAt: number
 }
@@ -46,8 +52,7 @@ const columns: ColumnDef<DockerContainer>[] = [
       ),
       enableSorting: false,
       enableHiding: false,
-      maxSize: 50,
-      size: 50
+      size: 20
     },
     {
       id: "Status",
@@ -65,7 +70,14 @@ const columns: ColumnDef<DockerContainer>[] = [
     {
       id: "Group",
       header: "Group",
-      cell: () => "Future"
+      cell: () => {
+        return (
+          <div className="flex flex-row items-center">
+            <p>Future</p>
+            <a href="/group/future" className="ml-2"><ExternalLink size={15}/></a>
+          </div>
+        )
+      }
     },
     {
         accessorKey: "Name",
@@ -77,12 +89,32 @@ const columns: ColumnDef<DockerContainer>[] = [
     {
         accessorKey: "Image",
         header: "Image",
-        cell: info => <p className="truncate">{info.getValue() as string}</p>
+        cell: info => {
+          return (
+          <div className="flex flex-row items-center">
+            <p className="truncate">{info.getValue() as string}</p>
+            <a href="/group/future" className="ml-2"><ExternalLink size={15}/></a>
+          </div>
+        )
+        }
     },
     {
         accessorKey: "Ports",
-        header: "Ports",
-        cell: info => (info.getValue() as number[]).join(":")
+        header: "Ports (public:private)", // TODO: Add info icon to explain Ports.
+        cell: info => {
+          const mappedPorts : Set<string> = new Set();
+          const ports = info.getValue() as DockerPort[]
+          ports.forEach((port) => {
+            const publicPort = port.PublicPort ?? "-"
+            const privatePort = port.PrivatePort ?? "-"
+            mappedPorts.add(`${publicPort}:${privatePort}`) 
+          })
+          return (
+            <div className="flex flex-row">
+              {Array.from(mappedPorts).map((ports) => <p className="mr-1">{ports}</p>)}
+            </div>
+          )
+        }
     },
     {
         accessorKey: "CreatedAt",
@@ -94,34 +126,7 @@ const columns: ColumnDef<DockerContainer>[] = [
       id: "Actions",
       header: "Actions",
       enableHiding: false,
-      cell: ({row}) => {
-        const container = row.original;
-         return (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="h-8 w-8 p-0">
-                  <span className="sr-only">Open menu</span>
-                  <MoreHorizontal />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuLabel className="font-bold flex flex-row items-center"><Container className="mr-1" size={18}/> Container actions</DropdownMenuLabel>
-                <DropdownMenuItem
-                  onClick={() => navigator.clipboard.writeText(container.Id)}
-                >
-                  Copy container ID
-                </DropdownMenuItem>
-                <DropdownMenuItem>View container details</DropdownMenuItem>
-                <DropdownMenuItem variant="destructive">
-                  Remove container
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuLabel className="font-bold flex flex-row items-center"><ScanEye className="mr-1" size={18}/>Tracing</DropdownMenuLabel>
-                <DropdownMenuItem>View audit log</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          )
-        },
+      cell: ({row}) => <ContainerTableActions container={row.original}/>
     }
 ]
 
@@ -200,7 +205,7 @@ export function DataTableDemo<TData, TValue>({data, columns}: DataTableProps<TDa
         <Button>Create <Plus /></Button>
       </div>
       <div className="border">
-        <Table className="w-full table-fixed">
+        <Table className="w-full">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
