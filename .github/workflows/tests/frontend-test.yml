@@ -1,9 +1,8 @@
-name: React Vite Test Pipeline (pnpm + cache)
+name: Run Olingo.Frontend Tests
 
 on:
-  push:
-    branches: [ main ]
   pull_request:
+    types: [opened, synchronize, reopened]
 
 jobs:
   test:
