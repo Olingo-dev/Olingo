@@ -1,6 +1,7 @@
 package containers
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/docker/docker/api/types/container"
@@ -16,7 +17,7 @@ import (
 )
 
 func Endpoints(router *gin.Engine, cli *client.Client) {
-	router.GET("/container", func(ctx *gin.Context) {
+	router.GET("/containers", func(ctx *gin.Context) {
 		containers, err := cli.ContainerList(ctx, container.ListOptions{})
 		if err != nil {
 			return
@@ -33,7 +34,7 @@ func Endpoints(router *gin.Engine, cli *client.Client) {
 		}
 		ctx.JSON(http.StatusAccepted, mappedContainers)
 	})
-	router.POST("/container", func(ctx *gin.Context) {
+	router.POST("/containers", func(ctx *gin.Context) {
 		/*
 			{
 				name: "",
@@ -91,5 +92,30 @@ func Endpoints(router *gin.Engine, cli *client.Client) {
 			return
 		}
 		ctx.JSON(http.StatusCreated, container)
+	})
+	router.DELETE("/containers/:id", func(ctx *gin.Context) {
+		id := ctx.Param("id")
+		switch rm := ctx.Query("mode"); rm {
+		case "force":
+			err := cli.ContainerRemove(ctx, id, container.RemoveOptions{
+				Force: true,
+			})
+			if err != nil {
+				fmt.Println(err)
+				ctx.JSON(http.StatusInternalServerError, "Failed to remove container")
+			}
+			ctx.Status(http.StatusOK)
+		default:
+			err := cli.ContainerStop(ctx, id, container.StopOptions{})
+			if err != nil {
+				ctx.JSON(http.StatusInternalServerError, "Failed to stop the container")
+			}
+			err = cli.ContainerRemove(ctx, id, container.RemoveOptions{})
+			if err != nil {
+				fmt.Println(err)
+				ctx.JSON(http.StatusInternalServerError, "Failed to remove the container")
+			}
+			ctx.Status(http.StatusOK)
+		}
 	})
 }
