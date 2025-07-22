@@ -14,7 +14,7 @@ jobs:
     - name: Set up Go
       uses: actions/setup-go@v5
       with:
-        go-version: '1.24'  # Use the Go version your project needs
+        go-version: '1.24'
 
     - name: Install dependencies
       working-directory: ./Olingo.Backend/src
