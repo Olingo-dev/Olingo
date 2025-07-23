@@ -27,6 +27,9 @@ Olingo is fully configurable using environment variables.
 | LOG_LOCAL_TIME       | LOG_LOCAL_TIME determines if the time used for formatting the timestamps in backup files is the computer's local time. The default is to use UTC time.                                                                                                                                                          |
 | LOG_COMPRESS         | LOG_COMPRESS determines if the rotated log files should be compressed using gzip. The default is not to perform compression.                                                                                                                                                                                   |                                                                                               
 ## Contributing
+> [!IMPORTANT]
+> These modals will be moved to the documentation website. All models will be recreated using [likec4](https://likec4.dev/)
+
 Olingo has provided a C4 Model (Levels 1–3) to help contributors gain a clear understanding of the current project setup:
 
 - Level 1: [Context Diagram](https://github.com/Olingo-dev/Olingo/blob/canary/.media/diagrams/Olingo-context-diagram-lvl1.png)
