@@ -55,7 +55,7 @@ func Endpoints(router *gin.Engine, cli *client.Client) {
 		// Is the image of a valid format? Introduce pipeline now? Regex validation?
 		// - image:tag (Any other formats? - Find edge case)
 		// - Docker registry check? Hub? Self configurated ?
-		//  -> Efficient way to check ?
+		// -> Efficient way to check ?
 		// -> Check before submitting container creation ? frontend api call.... For now include here...
 		imageFilter := filters.NewArgs()
 		imageFilter.Add(docker.DockerFilterAttributes.Image.Reference, body.Image)
