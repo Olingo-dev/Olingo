@@ -21,6 +21,7 @@
 
 	// Use 'postCreateCommand' to run commands after the container is created.
 	"postCreateCommand": "sh ./setup.sh",
+	"postAttachCommand": "newgrp docker",
 
 	"customizations": {
 		"vscode": {

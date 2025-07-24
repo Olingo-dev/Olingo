@@ -7,7 +7,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { Button } from "../ui/button";
 import { Container, MoreHorizontal, ScanEye } from "lucide-react";
 
-function ContainerTableActions({ container }: { container: DockerContainer }) {
+function ContainerTableActions({ container, func }: { container: DockerContainer, func: VoidFunc }) {
   const dialogRef = useRef<RemoveContainerDialogRef>(null);
 
   return (
@@ -52,6 +52,7 @@ function ContainerTableActions({ container }: { container: DockerContainer }) {
         ref={dialogRef}
         containerId={container.Id}
         containerName={container.Name}
+        onClose={func}
       />
     </>
   );

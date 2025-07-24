@@ -20,10 +20,11 @@ export interface RemoveContainerDialogRef {
 interface RemoveContainerDialogProps {
   containerId: string;
   containerName?: string;
+  onClose: VoidFunc
 }
 
 
-const RemoveContainerDialog = forwardRef<RemoveContainerDialogRef, RemoveContainerDialogProps>(({containerId, containerName}, ref) => {
+const RemoveContainerDialog = forwardRef<RemoveContainerDialogRef, RemoveContainerDialogProps>(({containerId, containerName, onClose}, ref) => {
     const [open, setOpen] = useState(false);
     const [forceRemovalChecked, setForceRemovalChecked] = useState(false);
     useImperativeHandle(ref, () => ({
@@ -39,6 +40,7 @@ const RemoveContainerDialog = forwardRef<RemoveContainerDialogRef, RemoveContain
                     })
                 }
                 setOpen(false);
+                onClose()
             }   
         ).catch((err) => {
             toast(`Failed to remove ${containerName}`, {
