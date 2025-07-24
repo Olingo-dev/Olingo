@@ -1,14 +1,13 @@
 package containers
 
 import (
-	"fmt"
+	"io"
 	"net/http"
+	"os"
 
 	"github.com/docker/docker/api/types/container"
-	"github.com/docker/docker/api/types/filters"
 	"github.com/docker/docker/api/types/image"
 	"github.com/docker/docker/api/types/network"
-	"github.com/docker/docker/api/types/registry"
 	"github.com/docker/docker/client"
 	"github.com/gin-gonic/gin"
 	"github.com/olingo-dev/olingo/internal/docker"
@@ -20,6 +19,7 @@ func Endpoints(router *gin.Engine, cli *client.Client) {
 	router.GET("/containers", func(ctx *gin.Context) {
 		containers, err := cli.ContainerList(ctx, container.ListOptions{})
 		if err != nil {
+			ctx.JSON(http.StatusInternalServerError, pkg.ErrorResponse(err, pkg.ErrorResponseCaller.Container.List))
 			return
 		}
 		mappedContainers := make([]docker.DockerContainer, len(containers))
@@ -35,14 +35,6 @@ func Endpoints(router *gin.Engine, cli *client.Client) {
 		ctx.JSON(http.StatusAccepted, mappedContainers)
 	})
 	router.POST("/containers", func(ctx *gin.Context) {
-		/*
-			{
-				name: "",
-				image: ""
-				ports [],
-			}
-		*/
-		// Deserialize body
 		type Body struct {
 			Name  string `json:"name"`
 			Image string `json:"image"`
@@ -52,46 +44,27 @@ func Endpoints(router *gin.Engine, cli *client.Client) {
 		if status != nil {
 			ctx.Status(*status)
 		}
-		// Is the image of a valid format? Introduce pipeline now? Regex validation?
-		// - image:tag (Any other formats? - Find edge case)
-		// - Docker registry check? Hub? Self configurated ?
-		// -> Efficient way to check ?
-		// -> Check before submitting container creation ? frontend api call.... For now include here...
-		imageFilter := filters.NewArgs()
-		imageFilter.Add(docker.DockerFilterAttributes.Image.Reference, body.Image)
-		// Hub search
-		hubImages, err := cli.ImageSearch(ctx, body.Image, registry.SearchOptions{
-			Filters: imageFilter,
-		})
+		out, err := cli.ImagePull(ctx, body.Image, image.PullOptions{})
 		if err != nil {
+			ctx.JSON(http.StatusInternalServerError, pkg.ErrorResponse(err, pkg.ErrorResponseCaller.Image.Pull))
 			return
 		}
-		// Pull local imagelist. If image is not in said list? Do we pull it?
-		localImages, err := cli.ImageList(ctx, image.ListOptions{
-			Filters: imageFilter,
-		})
-		if err != nil {
-			return
-		}
-		if len(hubImages) <= 0 || len(localImages) <= 0 {
-			reader, err := cli.ImagePull(ctx, body.Image, image.PullOptions{})
-			if err != nil {
-				ctx.JSON(http.StatusInternalServerError, err)
-				return
-			}
-			defer reader.Close()
-		}
-		// Basic setup for creating a minimaly configured container.
-		container, err := cli.ContainerCreate(ctx, &container.Config{
+		defer out.Close()
+		io.Copy(os.Stdout, out) // Await iamge pull if there.
+		createdContainer, err := cli.ContainerCreate(ctx, &container.Config{
 			Labels: docker.GenerateLabels("123"),
 			Image:  body.Image,
 		}, &container.HostConfig{}, &network.NetworkingConfig{}, &v1.Platform{}, body.Name)
-
 		if err != nil {
-			ctx.JSON(http.StatusInternalServerError, err)
+			ctx.Header("Retry-After", "120")
+			ctx.JSON(http.StatusInternalServerError, pkg.ErrorResponse(err, pkg.ErrorResponseCaller.Container.Create))
 			return
 		}
-		ctx.JSON(http.StatusCreated, container)
+		if err := cli.ContainerStart(ctx, createdContainer.ID, container.StartOptions{}); err != nil {
+			ctx.Header("Retry-After", "120")
+			ctx.JSON(http.StatusInternalServerError, pkg.ErrorResponse(err, pkg.ErrorResponseCaller.Container.Start))
+		}
+		ctx.JSON(http.StatusCreated, createdContainer)
 	})
 	router.DELETE("/containers/:id", func(ctx *gin.Context) {
 		id := ctx.Param("id")
@@ -101,19 +74,17 @@ func Endpoints(router *gin.Engine, cli *client.Client) {
 				Force: true,
 			})
 			if err != nil {
-				fmt.Println(err)
-				ctx.JSON(http.StatusInternalServerError, "Failed to remove container")
+				ctx.JSON(http.StatusInternalServerError, pkg.ErrorResponse(err, pkg.ErrorResponseCaller.Container.Remove))
 			}
 			ctx.Status(http.StatusOK)
 		default:
 			err := cli.ContainerStop(ctx, id, container.StopOptions{})
 			if err != nil {
-				ctx.JSON(http.StatusInternalServerError, "Failed to stop the container")
+				ctx.JSON(http.StatusInternalServerError, pkg.ErrorResponse(err, pkg.ErrorResponseCaller.Container.Stop))
 			}
 			err = cli.ContainerRemove(ctx, id, container.RemoveOptions{})
 			if err != nil {
-				fmt.Println(err)
-				ctx.JSON(http.StatusInternalServerError, "Failed to remove the container")
+				ctx.JSON(http.StatusInternalServerError, pkg.ErrorResponse(err, pkg.ErrorResponseCaller.Container.Remove))
 			}
 			ctx.Status(http.StatusOK)
 		}

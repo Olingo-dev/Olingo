@@ -45,6 +45,15 @@ These diagrams are designed to help you quickly understand the system's architec
 ### Contribution Guidelines
 Before contributing, please make sure to review and follow the project's [contribution guidelines](./CONTRIBUTING.md). These guidelines cover important aspects such as coding standards, documentation requirements, and the pull request process to ensure consistency and quality across all contributions.
 
+## Development
+> [!IMPORTANT]
+> Using the Devcontainer ensures a consistent and reliable development environment for anyone working on the project. It simplifies setup by bundling all required tools and dependencies into a ready-to-use workspace.
+
+### Starting the development server
+The development environment includes both the backend and frontend servers, each with hot-reloading enabled.
+To launch everything simultaneously, use the `dev-server.sh` script located in the `./scripts` directory.
+
+
 ### Development on windows.
 If you're experiencing performance issues with your DevContainer, try cloning the Olingo repository directly into the Windows Subsystem for Linux (WSL) and work from there. This can enhance performance because WSL offers faster file system operations compared to traditional Windows setups.
 

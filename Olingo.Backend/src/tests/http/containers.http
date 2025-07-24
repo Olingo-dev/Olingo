@@ -3,7 +3,7 @@ GET {{host}}/containers
 POST {{host}}/containers
 
 {
-    "name": "NginxTest2",
+    "name": "NginxTest3",
     "image": "nginx:latest"
 }
 #
