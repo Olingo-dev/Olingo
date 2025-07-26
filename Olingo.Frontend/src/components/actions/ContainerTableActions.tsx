@@ -2,7 +2,7 @@ import { useRef } from "react";
 import RemoveContainerDialog, {
   type RemoveContainerDialogRef,
 } from "@/components/dialogs/removeContainerDialog";
-import type { DockerContainer } from "@/home";
+import type { DockerContainer } from "@/pages/home";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import { Button } from "../ui/button";
 import { Container, MoreHorizontal, ScanEye } from "lucide-react";

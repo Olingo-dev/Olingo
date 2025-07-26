@@ -1,21 +1,21 @@
 import { useEffect, useRef, useState } from "react"
-import { Skeleton } from "./components/ui/skeleton"
+import { Skeleton } from "@/components/ui/skeleton"
 import { flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable, type ColumnDef, type ColumnFiltersState, type SortingState, type VisibilityState } from "@tanstack/react-table"
-import { TableBody, TableCell, TableHead, TableHeader, TableRow, Table } from "./components/ui/table"
-import { Button } from "./components/ui/button"
-import { Input } from "./components/ui/input"
+import { TableBody, TableCell, TableHead, TableHeader, TableRow, Table } from "@/components/ui/table"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from "./components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu"
 
 import { ChartNoAxesColumn, ChevronDown, ExternalLink, Plus} from "lucide-react"
-import { Checkbox } from "./components/ui/checkbox"
-import ContainerTableActions from "./components/actions/ContainerTableActions"
-import type { CreateContainerDialogRef } from "./components/dialogs/createContainerDialog"
-import CreateContainerDialog from "./components/dialogs/createContainerDialog"
+import { Checkbox } from "@/components/ui/checkbox"
+import ContainerTableActions from "@/components/actions/ContainerTableActions"
+import type { CreateContainerDialogRef } from "@/components/dialogs/createContainerDialog"
+import CreateContainerDialog from "@/components/dialogs/createContainerDialog"
 
 
 export type DockerPort = {
@@ -37,8 +37,6 @@ interface DataTableProps<TData, TValue> {
     data: TData[]
     func: VoidFunc
 }
-
-
 
 export function DataTableDemo<TData, TValue>({data, columns, func}: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([])

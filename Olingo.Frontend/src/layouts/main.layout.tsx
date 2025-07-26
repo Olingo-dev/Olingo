@@ -55,7 +55,7 @@ export default function MainLayout() {
                     <h1>Olingo</h1>
                 </section>
             </header>
-            <section className="relative">
+            <section className="relative h-full">
             <SidebarProvider>
                 <MainSidebar />
                 <main className="bg-main w-full">

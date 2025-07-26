@@ -9,9 +9,7 @@ import { NavMain } from "./nav-main"
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarHeader,
-  SidebarRail,
 } from "@/components/ui/sidebar"
 
 
@@ -24,8 +22,8 @@ const data = {
       isActive: true,
       items: [
         {
-          title: "History",
-          url: "#",
+          title: "Create",
+          url: "/containers/create",
         },
         {
           title: "Starred",
@@ -71,10 +69,6 @@ export function MainSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) 
       <SidebarContent>
         <NavMain items={data.navMain} />
       </SidebarContent>
-      <SidebarFooter>
-        Olingo
-      </SidebarFooter>
-      <SidebarRail />
     </Sidebar>
   )
 }
