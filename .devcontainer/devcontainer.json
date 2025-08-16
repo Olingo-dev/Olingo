@@ -29,6 +29,14 @@
 				"ms-vscode.live-server"
 			]
 		}
+	},
+	"portsAttributes": {
+		"8080": {
+			"label": "Backend"
+		},
+		"5173": {
+			"label": "Frontend"
+		}
 	}
 
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.

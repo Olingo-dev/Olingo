@@ -16,6 +16,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import ContainerTableActions from "@/components/actions/ContainerTableActions"
 import type { CreateContainerDialogRef } from "@/components/dialogs/createContainerDialog"
 import CreateContainerDialog from "@/components/dialogs/createContainerDialog"
+import { Title } from "@/components/ui/title"
 
 
 export type DockerPort = {
@@ -322,7 +323,7 @@ export default function Home() {
     }
     return (
       <>
-        <h1>Containers</h1>
+        <Title title="Containers" />
         <DataTableDemo columns={columns} data={containers} func={fetchContainer}/>
       </>
     )
