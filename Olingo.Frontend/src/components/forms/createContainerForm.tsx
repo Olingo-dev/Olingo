@@ -13,6 +13,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Plus, X, HardDrive } from "lucide-react"
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert"
 import{ OlingoIcon } from "@/components/icons/OlingoIcon"
+import { CollapsibleAlert } from "../ui/custom/CollapsibleAlert"
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const containerConfigSchema = z.object({
@@ -125,7 +126,6 @@ export default function Component() {
     const hostPath = newVolumeHost.trim()
     const containerPath = newVolumeContainer.trim()
 
-    // Basic validation for empty fields
     if (!hostPath || !containerPath) {
       setVolumeErrors({
         host: !hostPath ? "Host path is required" : undefined,
@@ -134,13 +134,11 @@ export default function Component() {
       return
     }
 
-    // Validate container path starts with /
     if (!containerPath.startsWith("/")) {
       setVolumeErrors({ container: "Container path must start with /" })
       return
     }
 
-    // Check for duplicate host paths
     if (Object.prototype.hasOwnProperty.call(volumeMounts, hostPath)) {
       setVolumeErrors({ host: "Host path already exists" })
       return
@@ -356,13 +354,7 @@ export default function Component() {
           <CardHeader>
             <CardTitle>Labels</CardTitle>
             <CardDescription>Add key-value pair labels</CardDescription>
-            <Alert variant="informational">
-                <OlingoIcon />
-                <AlertTitle>Olingo managed labels</AlertTitle>
-                <AlertDescription>
-                    All containers managed by Olingo are assigned Olingo-specific labels. These labels serve to facilitate correlation and tracking across the managed resources.
-                </AlertDescription>
-            </Alert>
+            <CollapsibleAlert title="Olingo managed labels" description="All containers managed by Olingo are assigned Olingo-specific labels. These labels serve to facilitate correlation and tracking across the managed resources." variant="informational" />
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid grid-cols-2 gap-2">

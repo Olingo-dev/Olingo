@@ -26,16 +26,17 @@
 			"extensions": [
 				"anweber.vscode-httpyac",
                 "golang.go",
-				"ms-vscode.live-server"
+				"ms-vscode.live-server",
+				"ms-azuretools.vscode-docker"
 			]
 		}
 	},
 	"portsAttributes": {
 		"8080": {
-			"label": "Backend"
+			"label": "Olingo API"
 		},
 		"5173": {
-			"label": "Frontend"
+			"label": "Olingo"
 		}
 	}
 

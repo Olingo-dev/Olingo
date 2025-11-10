@@ -1,4 +1,4 @@
-import { forwardRef, useImperativeHandle, useState } from "react";
+import { forwardRef, Fragment, useImperativeHandle, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -22,6 +22,7 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { Input } from "../ui/input";
+import { Spinner } from "../ui/spinner";
 
 export interface CreateContainerDialogRef {
     open: () => void;
@@ -35,17 +36,20 @@ const FormSchema = z.object({
   name: z.string().min(2, {
     message: "Username must be at least 2 characters.",
   }),
-  image: z.string().min(3)
+  imageName: z.string().min(3),
+  imageTag: z.string().min(1),
 })
 
 
 const CreateContainerDialog = forwardRef<CreateContainerDialogRef, CreateContainerDialogProps>(({onClose}, ref) => {
     const [open, setOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
     useImperativeHandle(ref, () => ({
         open: () => setOpen(true),
     }));
 
     const onSubmit = (data : z.infer<typeof FormSchema>) => {
+        setLoading(true);
         fetch(`http://localhost:8080/containers`, {method: "POST", body: JSON.stringify(data, null, 2)})
         .then((res) => {
                 if(res.status === 200) {
@@ -54,20 +58,22 @@ const CreateContainerDialog = forwardRef<CreateContainerDialogRef, CreateContain
                     })
                 }
                 setOpen(false);
-                onClose()
+                onClose();
+                
             }   
         ).catch((err) => {
             toast(`Failed to  create container`, {
                 description: `${err}`
             })
-        })
+        }).finally(() => setLoading(false));
     }
 
     const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
       name: "",
-      image: ""
+      imageName: "",
+      imageTag: ""
     },
   })
     return (
@@ -88,7 +94,7 @@ const CreateContainerDialog = forwardRef<CreateContainerDialogRef, CreateContain
                         <FormItem>
                         <FormLabel>Name</FormLabel>
                         <FormControl>
-                            <Input placeholder="Olingo" {...field} />
+                            <Input placeholder="e.g., myContainer" {...field} />
                         </FormControl>
                         <FormMessage />
                         </FormItem>
@@ -96,12 +102,25 @@ const CreateContainerDialog = forwardRef<CreateContainerDialogRef, CreateContain
                     />
                     <FormField
                     control={form.control}
-                    name="image"
+                    name="imageName"
                     render={({ field }) => (
                         <FormItem>
-                        <FormLabel>Image</FormLabel>
+                        <FormLabel>Image name</FormLabel>
                         <FormControl>
-                            <Input placeholder="olingo:latest" {...field} />
+                            <Input placeholder="e.g., olingo, node, go" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                        </FormItem>
+                    )}
+                    />
+                    <FormField
+                    control={form.control}
+                    name="imageTag"
+                    render={({ field }) => (
+                        <FormItem>
+                        <FormLabel>Image tag</FormLabel>
+                        <FormControl>
+                            <Input placeholder="e.g., latest, v1.0.0" {...field} />
                         </FormControl>
                         <FormMessage />
                         </FormItem>
@@ -111,8 +130,13 @@ const CreateContainerDialog = forwardRef<CreateContainerDialogRef, CreateContain
                     <Button onClick={() => {
                         setOpen(false)
                         onClose()
+                        setLoading(false) // TODO CANCELATION TOKEN
                     }} className="cursor-pointer">Cancel</Button>
-                    <Button type="submit" className="cursor-pointer">Create</Button>
+                    <Button type="submit" className="cursor-pointer" disabled={loading}>
+                       {
+                        loading ? <Fragment><Spinner /> Loading...</Fragment>  : "Create"
+                       }
+                    </Button>
                 </DialogFooter>
                 </form>
             </Form>

@@ -36,24 +36,26 @@ func Endpoints(router *gin.Engine, cli *client.Client) {
 	})
 	router.POST("/containers", func(ctx *gin.Context) {
 		type Body struct {
-			Name  string `json:"name"`
-			Image string `json:"image"`
+			Name      string `json:"name"`
+			ImageName string `json:"imageName"`
+			ImageTag  string `json:"imageTag"`
 		}
 		var body Body
 		status := pkg.DeserializeBody(&body, ctx)
 		if status != nil {
 			ctx.Status(*status)
 		}
-		out, err := cli.ImagePull(ctx, body.Image, image.PullOptions{})
+		ImageToPull := body.ImageName + ":" + body.ImageTag
+		out, err := cli.ImagePull(ctx, ImageToPull, image.PullOptions{})
 		if err != nil {
 			ctx.JSON(http.StatusInternalServerError, pkg.ErrorResponse(err, pkg.ErrorResponseCaller.Image.Pull))
 			return
 		}
 		defer out.Close()
-		io.Copy(os.Stdout, out) // Await iamge pull if there.
+		io.Copy(os.Stdout, out)
 		createdContainer, err := cli.ContainerCreate(ctx, &container.Config{
 			Labels: docker.GenerateLabels("123"),
-			Image:  body.Image,
+			Image:  ImageToPull,
 		}, &container.HostConfig{}, &network.NetworkingConfig{}, &v1.Platform{}, body.Name)
 		if err != nil {
 			ctx.Header("Retry-After", "120")
